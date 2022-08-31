@@ -5,24 +5,30 @@ import 'package:flutter/material.dart';
 class NoGlowScroll extends StatelessWidget {
   const NoGlowScroll({
     Key? key,
-    this.listView,
-    this.singleChildScrollView,
-  })  : assert(
-          listView == null || singleChildScrollView == null,
-          "You can use only one",
-        ),
-        super(key: key);
+    required this.child,
+    this.disableScroll = false,
+    this.scrollPhysics,
+  }) : super(key: key);
 
-  final ListView? listView;
-  final SingleChildScrollView? singleChildScrollView;
+  final Widget child;
+  final bool? disableScroll;
+  final ScrollPhysics? scrollPhysics;
 
   @override
   Widget build(BuildContext context) {
     return NotificationListener<OverscrollIndicatorNotification>(
-        onNotification: (OverscrollIndicatorNotification overscroll) {
-          overscroll.disallowIndicator();
-          return true;
-        },
-        child: const SingleChildScrollView());
+      onNotification: (OverscrollIndicatorNotification overscroll) {
+        overscroll.disallowIndicator();
+        return true;
+      },
+      child: child is ListView
+          ? child
+          : SingleChildScrollView(
+              physics: disableScroll!
+                  ? const NeverScrollableScrollPhysics()
+                  : scrollPhysics,
+              child: child,
+            ),
+    );
   }
 }
