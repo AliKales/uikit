@@ -10,7 +10,7 @@ class CustomDialog {
   }) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(title ?? ""),
@@ -30,7 +30,7 @@ class CustomDialog {
 
     await showDialog(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(title ?? ""),
@@ -47,5 +47,64 @@ class CustomDialog {
     );
 
     return textToReturn;
+  }
+
+  static Future<int?> showDialogRadios({
+    required BuildContext context,
+    required List<String> list,
+    String? title,
+  }) async {
+    ValueNotifier<int> groupValue = ValueNotifier(-1);
+
+    await showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title ?? ""),
+          contentPadding: EdgeInsets.zero,
+          content: FractionallySizedBox(
+            heightFactor: 0.7,
+            child: Column(
+              children: [
+                const Divider(),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: (context, index) {
+                      return ValueListenableBuilder(
+                          valueListenable: groupValue,
+                          builder: (context, _, __) {
+                            return ListTile(
+                              onTap: () => groupValue.value = index,
+                              visualDensity: const VisualDensity(vertical: -3),
+                              title: Text(list[index]),
+                              leading: Radio<int>(
+                                value: index,
+                                groupValue: groupValue.value,
+                                onChanged: (value) => groupValue.value = value!,
+                              ),
+                            );
+                          });
+                    },
+                  ),
+                ),
+                const Divider(),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                if (groupValue.value != -1) Navigator.pop(context);
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+
+    return groupValue.value == -1 ? null : groupValue.value;
   }
 }
