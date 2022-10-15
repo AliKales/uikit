@@ -32,7 +32,6 @@ class TextFieldRounded extends StatelessWidget {
   DecoratedBox _textField() {
     return DecoratedBox(
       decoration: const BoxDecoration(
-        color: Colors.pink,
         borderRadius: BorderRadius.all(
           Radius.circular(24),
         ),

@@ -8,11 +8,17 @@ class NoGlowScroll extends StatelessWidget {
     required this.child,
     this.disableScroll = false,
     this.scrollPhysics,
-  }) : super(key: key);
+    this.scrollController,
+  })  : assert(
+          !(scrollController != null && child is ListView),
+          "You can not insert a ScrollController when you use ListView",
+        ),
+        super(key: key);
 
   final Widget child;
   final bool? disableScroll;
   final ScrollPhysics? scrollPhysics;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +30,7 @@ class NoGlowScroll extends StatelessWidget {
       child: child is ListView
           ? child
           : SingleChildScrollView(
+              controller: scrollController,
               physics: disableScroll!
                   ? const NeverScrollableScrollPhysics()
                   : scrollPhysics,
