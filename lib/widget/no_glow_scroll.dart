@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 ///[NoGlowScroll] disables glow effect when user scrolls till end
 ///but it must take only one value
@@ -9,6 +10,7 @@ class NoGlowScroll extends StatelessWidget {
     this.disableScroll = false,
     this.scrollPhysics,
     this.scrollController,
+    this.scrollDirection,
   })  : assert(
           !(scrollController != null && child is ListView),
           "You can not insert a ScrollController when you use ListView",
@@ -19,6 +21,7 @@ class NoGlowScroll extends StatelessWidget {
   final bool? disableScroll;
   final ScrollPhysics? scrollPhysics;
   final ScrollController? scrollController;
+  final Axis? scrollDirection;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +33,7 @@ class NoGlowScroll extends StatelessWidget {
       child: child is ListView
           ? child
           : SingleChildScrollView(
+              scrollDirection: scrollDirection ?? Axis.vertical,
               controller: scrollController,
               physics: disableScroll!
                   ? const NeverScrollableScrollPhysics()

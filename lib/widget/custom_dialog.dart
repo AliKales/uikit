@@ -7,10 +7,11 @@ class CustomDialog {
     String? title,
     String? text,
     List<Widget>? actions,
+    bool? barrierDismissible,
   }) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: true,
+      barrierDismissible: barrierDismissible ?? true,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(title ?? ""),
