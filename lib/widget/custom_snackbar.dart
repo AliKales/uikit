@@ -6,11 +6,13 @@ class CustomSnackbar {
     required String text,
     Widget? suffix,
     Duration? duration,
+    Color? background,
   }) {
     FocusScope.of(context).unfocus();
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        backgroundColor: background,
         content: suffix != null
             ? Row(
                 children: [

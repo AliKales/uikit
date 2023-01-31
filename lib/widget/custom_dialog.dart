@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:uikit/widget/index.dart';
 
@@ -64,36 +65,16 @@ class CustomDialog {
         return AlertDialog(
           title: Text(title ?? ""),
           contentPadding: EdgeInsets.zero,
-          content: FractionallySizedBox(
-            heightFactor: 0.7,
-            child: Column(
-              children: [
-                const Divider(),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: list.length,
-                    itemBuilder: (context, index) {
-                      return ValueListenableBuilder(
-                          valueListenable: groupValue,
-                          builder: (context, _, __) {
-                            return ListTile(
-                              onTap: () => groupValue.value = index,
-                              visualDensity: const VisualDensity(vertical: -3),
-                              title: Text(list[index]),
-                              leading: Radio<int>(
-                                value: index,
-                                groupValue: groupValue.value,
-                                onChanged: (value) => groupValue.value = value!,
-                              ),
-                            );
-                          });
-                    },
-                  ),
+          content: kIsWeb
+              ? SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: _widget(list, groupValue),
+                )
+              : FractionallySizedBox(
+                  heightFactor: 0.7,
+                  child: _widget(list, groupValue),
                 ),
-                const Divider(),
-              ],
-            ),
-          ),
           actions: [
             TextButton(
               onPressed: () {
@@ -107,5 +88,36 @@ class CustomDialog {
     );
 
     return groupValue.value == -1 ? null : groupValue.value;
+  }
+
+  static Column _widget(List<String> list, ValueNotifier<int> groupValue) {
+    return Column(
+      children: [
+        const Divider(),
+        Expanded(
+          child: ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return ValueListenableBuilder(
+                valueListenable: groupValue,
+                builder: (context, _, __) {
+                  return ListTile(
+                    onTap: () => groupValue.value = index,
+                    visualDensity: const VisualDensity(vertical: -3),
+                    title: Text(list[index]),
+                    leading: Radio<int>(
+                      value: index,
+                      groupValue: groupValue.value,
+                      onChanged: (value) => groupValue.value = value!,
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+        const Divider(),
+      ],
+    );
   }
 }
