@@ -59,7 +59,7 @@ class CustomContextMenu {
               top: position.dy,
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
+                decoration: BoxDecoration( 
                   color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(26),

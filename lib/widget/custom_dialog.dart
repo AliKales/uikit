@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:uikit/widget/index.dart';
@@ -58,13 +61,49 @@ class CustomDialog {
   }) async {
     ValueNotifier<int> groupValue = ValueNotifier(-1);
 
+    int cupertinoSelected = 0;
+
     await showDialog(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
+        var height = MediaQuery.of(context).size.height;
+        if (Platform.isIOS) {
+          return Column(
+            children: [
+              SizedBox(height: height * 0.6),
+              Container(
+                color: Theme.of(context).colorScheme.background,
+                width: double.maxFinite,
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    if (cupertinoSelected != -1) {
+                      groupValue.value = cupertinoSelected;
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text("OK"),
+                ),
+              ),
+              Expanded(
+                child: CupertinoPicker.builder(
+                  itemExtent: height * 0.05,
+                  onSelectedItemChanged: (value) {
+                    cupertinoSelected = value;
+                  },
+                  childCount: list.length,
+                  itemBuilder: (context, index) => Center(
+                    child: Text(list[index]),
+                  ),
+                  backgroundColor: Theme.of(context).colorScheme.background,
+                ),
+              ),
+            ],
+          );
+        }
         return AlertDialog(
-          title: Text(title ?? ""),
-          contentPadding: EdgeInsets.zero,
+          title: _title(title),
           content: kIsWeb
               ? SizedBox(
                   height: 200,
@@ -75,20 +114,27 @@ class CustomDialog {
                   heightFactor: 0.7,
                   child: _widget(list, groupValue),
                 ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                if (groupValue.value != -1) Navigator.pop(context);
-              },
-              child: const Text("OK"),
-            ),
-          ],
+          actions: _actions(groupValue, context),
         );
       },
     );
 
     return groupValue.value == -1 ? null : groupValue.value;
   }
+
+  static List<Widget> _actions(
+      ValueNotifier<int> groupValue, BuildContext context) {
+    return [
+      TextButton(
+        onPressed: () {
+          if (groupValue.value != -1) Navigator.pop(context);
+        },
+        child: const Text("OK"),
+      ),
+    ];
+  }
+
+  static Text _title(String? title) => Text(title ?? "");
 
   static Column _widget(List<String> list, ValueNotifier<int> groupValue) {
     return Column(
