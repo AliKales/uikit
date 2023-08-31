@@ -30,7 +30,7 @@ class ShowCustomMenu<T> extends StatelessWidget {
 
     if (result == null) return;
 
-    onClick!.call(result, items[result]);
+    onClick?.call(result, items[result]);
   }
 
   RelativeRect _getRelativeRect(BuildContext context) {

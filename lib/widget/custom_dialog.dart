@@ -10,6 +10,7 @@ class CustomDialog {
     required BuildContext context,
     String? title,
     String? text,
+    Widget? content,
     List<Widget>? actions,
     bool? barrierDismissible,
   }) async {
@@ -19,7 +20,7 @@ class CustomDialog {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(title ?? ""),
-          content: Text(text ?? ""),
+          content: content ?? Text(text ?? ""),
           actions: actions,
         );
       },
