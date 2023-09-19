@@ -19,21 +19,23 @@ class TextFieldRounded extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return labelText == null
-        ? _textField()
+        ? _textField(context)
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(labelText!, style: Theme.of(context).textTheme.titleLarge),
-              _textField(),
+              _textField(context),
             ],
           );
   }
 
-  DecoratedBox _textField() {
+  DecoratedBox _textField(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.all(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        borderRadius: const BorderRadius.all(
           Radius.circular(20),
         ),
       ),

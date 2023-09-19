@@ -6,6 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:uikit/widget/index.dart';
 
 class CustomDialog {
+  const CustomDialog._();
+
+  static Widget okButton(BuildContext context) {
+    return TextButton(
+      onPressed: () => Navigator.pop(context),
+      child: const Text("OK"),
+    );
+  }
+
   static Future<void> showMyDialog({
     required BuildContext context,
     String? title,
@@ -30,9 +39,10 @@ class CustomDialog {
   static Future<String?> showDialogTextField({
     required BuildContext context,
     String? title,
-    List<Widget>? actions,
+    String? hintText,
   }) async {
     String? textToReturn;
+    String? textFromField;
 
     await showDialog(
       context: context,
@@ -41,13 +51,20 @@ class CustomDialog {
         return AlertDialog(
           title: Text(title ?? ""),
           content: TextFieldRounded(
-            hintText: "Text here...",
-            keyboardType: TextInputType.number,
+            hintText: hintText,
             onChanged: (text) {
-              textToReturn = text;
+              textFromField = text;
             },
           ),
-          actions: actions,
+          actions: [
+            TextButton(
+              onPressed: () {
+                textToReturn = textFromField;
+                Navigator.pop(context);
+              },
+              child: const Text("OK"),
+            ),
+          ],
         );
       },
     );
