@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CustomSnackbar {
+@immutable
+final class CustomSnackbar {
+  const CustomSnackbar._();
+
   static void showSnackBar({
     required BuildContext context,
     required String text,
@@ -39,7 +42,7 @@ class CustomSnackbar {
     );
   }
 
-  static void showSpecialSnackBar(
+  static void showSuccessSnackBar(
     BuildContext context, {
     required String text,
     required bool isSuccess,

@@ -25,16 +25,16 @@ class TextsWidgetView extends StatelessWidget {
     ];
     return Scaffold(
       appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: List.generate(
-            textStyles.length,
-            (index) => Text(
-              textStyles[index].label,
-              style: textStyles[index].textStyle,
-            ),
-          ),
-        ),
+      body: ListView.separated(
+        itemBuilder: (context, index) {
+          TextModel textModel = textStyles[index];
+          return Text(
+            textModel.label,
+            style: textModel.textStyle,
+          );
+        },
+        separatorBuilder: (context, index) => const Divider(),
+        itemCount: textStyles.length,
       ),
     );
   }

@@ -30,6 +30,7 @@ final class CustomBottomSheet {
     );
   }
 
+  //dont change the int values
   static Widget _dividerForBottomSheet(
     BuildContext context, {
     Color? backgroundColor,

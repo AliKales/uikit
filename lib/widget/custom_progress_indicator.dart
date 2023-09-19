@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CustomProgressIndicator {
-  Future showProgressIndicator(context) async {
+@immutable
+final class CustomProgressIndicator {
+  const CustomProgressIndicator._();
+
+  static Future showProgressIndicator(BuildContext context) async {
     FocusScope.of(context).unfocus();
     if (ModalRoute.of(context)?.isCurrent ?? true) {
       await showGeneralDialog(
-          barrierLabel: "Barrier",
           barrierDismissible: false,
           barrierColor: Colors.black.withOpacity(0.5),
           transitionDuration: const Duration(milliseconds: 500),
@@ -19,11 +21,11 @@ class CustomProgressIndicator {
     }
   }
 
-  Future showProgressIndicatorMessage(context, String text) async {
+  static Future showProgressIndicatorMessage(
+      BuildContext context, String text) async {
     FocusScope.of(context).unfocus();
     if (ModalRoute.of(context)?.isCurrent ?? true) {
       await showGeneralDialog(
-          barrierLabel: "Barrier",
           barrierDismissible: false,
           barrierColor: Colors.black.withOpacity(0.5),
           transitionDuration: const Duration(milliseconds: 500),
@@ -63,7 +65,7 @@ class CustomProgressIndicator {
     }
   }
 
-  SizedBox _spacer(context, double height) {
+  static SizedBox _spacer(context, double height) {
     return SizedBox(height: MediaQuery.of(context).size.height * height);
   }
 }

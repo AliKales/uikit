@@ -32,6 +32,7 @@ class _RadioListDialogState extends State<_RadioListDialog> {
           return ListTile(
             title: Text(item),
             onTap: () => _onTap(index),
+            splashColor: Colors.transparent,
             leading: Radio<int>.adaptive(
               value: index,
               groupValue: _selectedIndex,

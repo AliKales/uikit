@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:uikit/widget/index.dart';
 
 class ShowCustomMenu<T> extends StatelessWidget {
-  const ShowCustomMenu(
-      {super.key,
-      this.child,
-      this.iconData,
-      required this.items,
-      required this.item,
-      this.onClick});
+  const ShowCustomMenu({
+    super.key,
+    required this.child,
+    required this.items,
+    required this.item,
+    required this.onClick,
+  });
 
-  final Widget? child;
-  final IconData? iconData;
+  final Widget child;
   final List<T> items;
   final Widget Function(int index, T item) item;
-  final Function(int index, T item)? onClick;
+  final Function(int index, T item) onClick;
 
   void _showList(BuildContext context) async {
     final result = await showMenu<int?>(
@@ -30,7 +30,7 @@ class ShowCustomMenu<T> extends StatelessWidget {
 
     if (result == null) return;
 
-    onClick?.call(result, items[result]);
+    onClick.call(result, items[result]);
   }
 
   RelativeRect _getRelativeRect(BuildContext context) {
@@ -49,11 +49,9 @@ class ShowCustomMenu<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (child != null) {
-      return child!;
-    }
-
-    return IconButton(
-        onPressed: () => _showList(context), icon: Icon(iconData));
+    return InkWellNoGlow(
+      onTap: () => _showList(context),
+      child: child,
+    );
   }
 }

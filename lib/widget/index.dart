@@ -1,6 +1,5 @@
 export 'no_glow_scroll.dart';
 export 'custom_snackbar.dart';
-export 'text_field_rounded.dart';
 export 'icon_circle.dart';
 export 'custom_dialog/custom_dialog.dart';
 export 'custom_progress_indicator.dart';
