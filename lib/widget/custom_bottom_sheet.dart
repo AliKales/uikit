@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CustomBottomSheet {
+@immutable
+final class CustomBottomSheet {
+  const CustomBottomSheet._();
+
   static void showCustomModalBottomSheet(
     BuildContext context, {
     Color? backgroundColor,
@@ -9,7 +12,9 @@ class CustomBottomSheet {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      shape: _shape(),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
       builder: (context) {
         return SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -22,12 +27,6 @@ class CustomBottomSheet {
           ),
         );
       },
-    );
-  }
-
-  static RoundedRectangleBorder _shape() {
-    return const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     );
   }
 
@@ -56,15 +55,6 @@ class CustomBottomSheet {
           ),
         ),
       ),
-    );
-  }
-
-  void showCustomBottomSheet(BuildContext context) {
-    showBottomSheet(
-      context: context,
-      builder: (context) {
-        return const Text("data");
-      },
     );
   }
 }
