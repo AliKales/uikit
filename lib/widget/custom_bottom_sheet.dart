@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uikit/uikit_extensions.dart';
 
 @immutable
 final class CustomBottomSheet {
@@ -39,7 +40,7 @@ final class CustomBottomSheet {
       width: double.maxFinite,
       height: 20,
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: backgroundColor ?? context.colorScheme.background,
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(16),
         ),

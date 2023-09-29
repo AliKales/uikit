@@ -25,21 +25,24 @@ class _RadioListDialogState extends State<_RadioListDialog> {
     return AlertDialog(
       title: Text(widget.title ?? "").toEmpty(widget.title.isEmptyOrNull),
       actions: [OKButton(context, val: _selectedIndex)],
-      content: ListView.builder(
-        itemCount: widget.items.length,
-        itemBuilder: (context, index) {
-          String item = widget.items[index];
-          return ListTile(
-            title: Text(item),
-            onTap: () => _onTap(index),
-            splashColor: Colors.transparent,
-            leading: Radio<int>.adaptive(
-              value: index,
-              groupValue: _selectedIndex,
-              onChanged: _onTap,
-            ),
-          );
-        },
+      content: SizedBox(
+        height: 0.35.toDynamicHeight(context),
+        child: ListView.builder(
+          itemCount: widget.items.length,
+          itemBuilder: (context, index) {
+            String item = widget.items[index];
+            return ListTile(
+              title: Text(item),
+              onTap: () => _onTap(index),
+              splashColor: Colors.transparent,
+              leading: Radio<int>.adaptive(
+                value: index,
+                groupValue: _selectedIndex,
+                onChanged: _onTap,
+              ),
+            );
+          },
+        ),
       ),
     );
   }

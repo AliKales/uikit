@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:uikit/widget/index.dart';
 
-class ShowCustomMenu<T> extends StatelessWidget {
-  const ShowCustomMenu({
+///[MenuWidget] is an widget that shows a menu and return clicked value
+class MenuWidget<T> extends StatelessWidget {
+  const MenuWidget({
     super.key,
     required this.child,
     required this.items,

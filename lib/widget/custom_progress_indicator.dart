@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uikit/uikit_extensions.dart';
 
 @immutable
 final class CustomProgressIndicator {
@@ -35,9 +36,9 @@ final class CustomProgressIndicator {
               onWillPop: () async => false,
               child: Center(
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
+                  decoration: BoxDecoration(
+                    color: context.colorScheme.background,
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(16),
                     ),
                   ),
@@ -52,8 +53,7 @@ final class CustomProgressIndicator {
                       _spacer(context, 0.02),
                       Text(
                         text,
-                        style: const TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       _spacer(context, 0.05),
                     ],
